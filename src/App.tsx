@@ -1,14 +1,18 @@
 import './App.css'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import AlbumList from '@/components/AlbumList'
-import { fetchAlbums } from '@/services/api';
+import SongList from '@/components/SongList'
+import { fetchAlbums, fetchSongs } from '@/services/api'
 import { useEffect, useState } from 'react';
+import type { Album, Song } from '@/types/models';
 
 function App() {
-  const [albums, setAlbums] = useState([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [songs, setSongs] = useState<Song[]>([]);
 
   useEffect(() => {
     fetchAlbums().then(setAlbums);
+    fetchSongs().then(setSongs);
   }, []);
 
   return (
@@ -21,7 +25,7 @@ function App() {
         </TabsList>
         <div className='h-8' ></div>
         <TabsContent value='albums'><AlbumList albums={albums} /></TabsContent>
-        <TabsContent value='songs'>Songs Data.</TabsContent>
+        <TabsContent value='songs'><SongList songs={songs} /></TabsContent>
         <TabsContent value='artists'>Artists Data.</TabsContent>
       </Tabs>
     </div>
