@@ -7,11 +7,9 @@ interface SongListProps {
 
 const SongList: React.FC<SongListProps> = ({ songs }) => (
   <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-    {/* Grid layout for different screen sizes */}
     <div className="grid gap-3 sm:gap-4 md:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       {songs.map(song => (
         <div key={song.id} className="group relative flex flex-col rounded-xl border bg-card p-3 sm:p-4 lg:p-5 text-card-foreground shadow-sm transition-all duration-200 hover:shadow-md hover:bg-muted/50 hover:scale-[1.02]">
-          {/* Main content */}
           <div className="flex-1 space-y-2 sm:space-y-3">
             <h3 className="text-sm sm:text-base lg:text-lg font-semibold tracking-tight line-clamp-2 leading-tight">
               {song.title}
@@ -23,7 +21,6 @@ const SongList: React.FC<SongListProps> = ({ songs }) => (
             )}
           </div>
 
-          {/* Footer with date and play button */}
           <div className="flex items-center justify-between mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-border/50">
             <p className="text-xs sm:text-sm text-muted-foreground font-medium">
               <span className="hidden sm:inline">Released: </span>
@@ -43,7 +40,6 @@ const SongList: React.FC<SongListProps> = ({ songs }) => (
               </span>
             </p>
 
-            {/* Play button */}
             <a
               href={song.link}
               target="_blank"

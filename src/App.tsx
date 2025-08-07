@@ -1,18 +1,21 @@
 import './App.css'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import AlbumList from '@/components/AlbumList'
-import SongList from '@/components/SongList'
-import { fetchAlbums, fetchSongs } from '@/services/api'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import AlbumList from '@/components/AlbumList';
+import SongList from '@/components/SongList';
+import ArtistList from '@/components/ArtistList';
+import { fetchAlbums, fetchArtists, fetchSongs } from '@/services/api';
 import { useEffect, useState } from 'react';
-import type { Album, Song } from '@/types/models';
+import type { Album, Artist, Song } from '@/types/models';
 
 function App() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [songs, setSongs] = useState<Song[]>([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
 
   useEffect(() => {
     fetchAlbums().then(setAlbums);
     fetchSongs().then(setSongs);
+    fetchArtists().then(setArtists);
   }, []);
 
   return (
@@ -26,10 +29,10 @@ function App() {
         <div className='h-8' ></div>
         <TabsContent value='albums'><AlbumList albums={albums} /></TabsContent>
         <TabsContent value='songs'><SongList songs={songs} /></TabsContent>
-        <TabsContent value='artists'>Artists Data.</TabsContent>
+        <TabsContent value='artists'><ArtistList artists={artists} /></TabsContent>
       </Tabs>
     </div>
   )
 }
 
-export default App
+export default App;
