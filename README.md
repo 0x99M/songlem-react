@@ -1,69 +1,72 @@
-# React + TypeScript + Vite
+# songlem-react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite + TypeScript web app for browsing music content (songs, albums, artists) from a GraphQL API. Tailwind CSS is used for styling and Radix UI primitives are used for accessible UI building blocks.
 
-Currently, two official plugins are available:
+## Features
+- Songs, Albums, and Artists listings fetched from a GraphQL endpoint
+- TypeScript models for strong typing
+- Tailwind CSS v4 utility-first styling
+- Radix UI Tabs primitive with a small wrapper and className utilities
+- Vite for fast dev, build, and preview
+- ESLint with TypeScript, React Hooks, and React Refresh configs
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React 19, React DOM 19
+- Vite 7, @vitejs/plugin-react-swc
+- TypeScript ~5.8
+- Tailwind CSS 4 with @tailwindcss/vite
+- Radix UI (@radix-ui/react-tabs)
+- Utilities: class-variance-authority, clsx, tailwind-merge
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Prerequisites:
+- Node.js 18+ (recommended) and npm
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Install dependencies:
+- npm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Run the development server:
+- npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Build for production:
+- npm run build
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Preview the production build locally:
+- npm run preview
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Lint the codebase:
+- npm run lint
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Project Structure
+A non-exhaustive overview of notable files:
+- vite.config.ts: Vite config with React SWC plugin, Tailwind, and @ alias to ./src
+- eslint.config.js: ESLint configuration for TS, React Hooks, and Vite React Refresh
+- src/types/models.ts: TypeScript interfaces for Album, Song, Artist
+- src/services/api.ts: Fetch utilities that POST GraphQL queries to the backend
+- src/components/*: Presentational components (AlbumList, ArtistList, SongList, LoadingIndicator)
+- src/components/ui/tabs.tsx: Radix Tabs wrappers (Tabs, TabsList, TabsTrigger, TabsContent)
+- src/lib/utils.ts: cn helper, merging clsx with tailwind-merge
+
+## Configuration
+The GraphQL endpoint is currently hardcoded in src/services/api.ts:
+https://songlem.onrender.com/graphql/
+
+To point the app to a different backend, update the endpoint there or refactor to read from an environment variable at build time.
+
+Example (using Vite env variables):
+1) Create a .env file at the project root:
+VITE_GRAPHQL_ENDPOINT=https://your-endpoint/graphql/
+2) Read it in src/services/api.ts:
+const ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT ?? 'https://songlem.onrender.com/graphql/'
+fetch(ENDPOINT, { ... })
+
+## Styling
+- Tailwind CSS v4 is integrated via the @tailwindcss/vite plugin.
+- The cn utility combines clsx and tailwind-merge to compose Tailwind classes safely.
+
+## Scripts (from package.json)
+- dev: vite
+- build: tsc -b && vite build
+- preview: vite preview
+- lint: eslint .
